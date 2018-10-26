@@ -1,5 +1,6 @@
 package com.wang.sell.controller;
 
+import com.wang.sell.Utils.ResultVOUtil;
 import com.wang.sell.VO.ProductInfoVO;
 import com.wang.sell.VO.ProductVO;
 import com.wang.sell.VO.ResultVO;
@@ -68,11 +69,7 @@ public class BuyerProductController {
             productVOList.add(productVO);
         }
 
-        ResultVO resultVO = new ResultVO();
-        resultVO.setData(productVOList);
-        resultVO.setCode(0);
-        resultVO.setMsg("dddd");
 
-        return resultVO;
+        return ResultVOUtil.success(productVOList);
     }
 }

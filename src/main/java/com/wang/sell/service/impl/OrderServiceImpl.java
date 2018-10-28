@@ -1,5 +1,6 @@
 package com.wang.sell.service.impl;
 
+import com.wang.sell.DTO.CartDTO;
 import com.wang.sell.DTO.OrderDTO;
 import com.wang.sell.Utils.KeyUtil;
 import com.wang.sell.dataobject.OrderDetail;
@@ -16,9 +17,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -32,6 +37,7 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private OrderMasterRepository orderMasterRepository;
     @Override
+    @Transactional
     public OrderDTO create(OrderDTO orderDTO) {
 
         String orderId = KeyUtil.genUniqueKey();
@@ -58,9 +64,14 @@ public class OrderServiceImpl implements OrderService {
         orderMaster.setOrderId(orderId);
         BeanUtils.copyProperties(orderDTO,orderMaster);
         orderMasterRepository.save(orderMaster);
-        //减库存
 
-        return null;
+        //减库存
+        List<CartDTO> cartDTOList = orderDTO.getOrderDetailList().stream().map(e ->
+                new CartDTO(e.getProductId(), e.getProductQuantity()))
+                .collect(Collectors.toList());
+        productService.decreaseStock(cartDTOList);
+
+        return orderDTO;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.wang.sell.Utils;
+package com.wang.sell.utils;
 
 import com.wang.sell.VO.ResultVO;
 
@@ -11,7 +11,7 @@ public class ResultVOUtil {
         return resultVO;
     }
     public static ResultVO success(){
-        return null;
+        return success(null);
     }
     public static ResultVO error(Integer code, String msg){
         ResultVO resultVO = new ResultVO();

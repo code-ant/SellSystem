@@ -1,4 +1,4 @@
-package com.wang.sell.Utils;
+package com.wang.sell.utils;
 
 import java.util.Random;
 
@@ -7,7 +7,7 @@ public class KeyUtil {
     /**
      * 生成唯一主键
      * 时间+随机数
-     * @return
+     * @return 唯一订单号
      */
     public static synchronized String genUniqueKey(){
         Random random = new Random();

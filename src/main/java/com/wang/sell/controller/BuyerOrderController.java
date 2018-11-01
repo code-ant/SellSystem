@@ -1,7 +1,8 @@
 package com.wang.sell.controller;
 
 import com.wang.sell.DTO.OrderDTO;
-import com.wang.sell.Utils.ResultVOUtil;
+import com.wang.sell.service.BuyerService;
+import com.wang.sell.utils.ResultVOUtil;
 import com.wang.sell.VO.ResultVO;
 import com.wang.sell.converter.OrderForm2OrderDTOConverter;
 import com.wang.sell.enums.ResultEnum;
@@ -29,6 +30,8 @@ public class BuyerOrderController {
 
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private BuyerService buyerService;
 
     //创建订单
     @PostMapping("/create")
@@ -69,7 +72,20 @@ public class BuyerOrderController {
         return  ResultVOUtil.success(orderDTOPage.getContent());
     }
 
+
     //订单详情
+    @GetMapping("/detail")
+    public ResultVO<OrderDTO> detail(@RequestParam("openid") String openid,
+                                     @RequestParam("orderid") String orderid){
+        OrderDTO orderDTO = buyerService.findOrderOne(openid,orderid);
+        return ResultVOUtil.success(orderDTO);
+    }
 
     //取消订单
+    @PostMapping("cancel")
+    public ResultVO cancel(@RequestParam("openid") String openid,
+                           @RequestParam("orderid") String orderid){
+        OrderDTO orderDTO = buyerService.cancelOrder(openid,orderid);
+        return ResultVOUtil.success();
+    }
 }

@@ -8,13 +8,15 @@ spring:
     show-sql: true
   jackson:
     default-property-inclusion: non_null
-#logging:
+logging:
 #  pattern:
 #    console: "%d - %msg %n"
 #  file: log
-#  level:
-#    com.wang.sell.LoggerTest: debug
+  level:
+    com.wang.sell.dataobject.mapper: trace
 server:
   servlet:
     context-path: /sell
 
+mybatis:
+  mapper-locations: classpath:mapper/*.xml

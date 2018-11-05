@@ -33,6 +33,13 @@ public class OrderServiceImplTest {
     private final String ORDER_ID = "1540743638281686076";
 
     @Test
+    public void list(){
+        PageRequest request = PageRequest.of(0,2);
+        Page<OrderDTO> orderDTOPage = orderService.findList(request);
+        Assert.assertNotEquals(0,orderDTOPage.getTotalElements());
+    }
+
+    @Test
     public void create() {
         OrderDTO orderDTO = new OrderDTO();
         orderDTO.setBuyerAddress("qaws");
